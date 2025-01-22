@@ -35,7 +35,7 @@ if (app.Environment.IsDevelopment())
 
 
 }
-app.MapIdentityApi<IdentityUser>();//to configure the pipeline
+app.MapIdentityApi<IdentityUser>();//to configure the pipeline.
 
 app.UseHttpsRedirection();
 

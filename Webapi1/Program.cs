@@ -1,6 +1,19 @@
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using Webapi1.services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddDbContext<ApplicationDbcontext>(Options =>
+{
+    Options.UseSqlServer("name =Defaultconnection");
+
+});
+builder.Services.AddAuthorization();
+builder.Services.AddIdentityApiEndpoints<IdentityUser>()
+    .AddEntityFrameworkStores<ApplicationDbcontext>();
 
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
@@ -19,7 +32,10 @@ if (app.Environment.IsDevelopment())
     });
     //app.useswagger() enables swagger ui middleware ,which provides an intercative api documenatione page
 
+
+
 }
+app.MapIdentityApi<IdentityUser>();//to configure the pipeline
 
 app.UseHttpsRedirection();
 

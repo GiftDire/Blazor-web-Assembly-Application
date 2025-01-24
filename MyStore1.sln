@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35527.113 d17.12
+VisualStudioVersion = 17.12.35527.113
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Webapi1", "Webapi1\Webapi1.csproj", "{792CB39A-ED60-4083-BDF6-5D60593EFE68}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorApp", "BlazorApp\BlazorApp.csproj", "{8FB367A6-1853-4E1A-9221-8676CA7BA9BB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{792CB39A-ED60-4083-BDF6-5D60593EFE68}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{792CB39A-ED60-4083-BDF6-5D60593EFE68}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{792CB39A-ED60-4083-BDF6-5D60593EFE68}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8FB367A6-1853-4E1A-9221-8676CA7BA9BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8FB367A6-1853-4E1A-9221-8676CA7BA9BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8FB367A6-1853-4E1A-9221-8676CA7BA9BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8FB367A6-1853-4E1A-9221-8676CA7BA9BB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -13,7 +13,7 @@
     "https": {
       "commandName": "Project",
       "dotnetRunMessages": true,
-      "launchBrowser": true, //setting this to true
+      "launchBrowser": false, //setting this to true
       "launchUrl": "swagger",
       "applicationUrl": "https://localhost:4000;http://localhost:5194",
       //you can also change the port number

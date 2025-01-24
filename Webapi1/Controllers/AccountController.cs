@@ -3,6 +3,14 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Webapi1.Models;
+// what is this file
+//Is a C# web api controller that handles user account related actions is an ASP.NET core application. it helps manage user authentication and profile retrieval
+//this class is responsible for handling user authentintication and retrieving user details.
+//it is a controller in an API ,meaning it defines endpoints that clients can call
+
+//depedencies 
+//This class depends on usermanager<identityuser>which is part of ASP.NET Identity
+//The usermanage helps in managing user related actions, such as retrieving user details.
 
 namespace Webapi1.Controllers
 {
@@ -45,7 +53,7 @@ namespace Webapi1.Controllers
                 Email = currentUser.Email ?? "",
                 PhoneNumber = currentUser.PhoneNumber ?? "",
             };
-            return Ok();
+            return Ok(userProfile);
         
         }
     }

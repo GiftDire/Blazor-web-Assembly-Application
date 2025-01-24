@@ -20,6 +20,9 @@ builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 
 var app = builder.Build();
+app.UseCors(policy => policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+//cross origin resource sharing >is a security feature that controls which website can access your api from a different domain by default.
+//browsers block requests from different domains for security reasons 
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

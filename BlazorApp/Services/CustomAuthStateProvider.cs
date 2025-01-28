@@ -86,7 +86,7 @@ namespace BlazorApp.Services
 
                     localstorage.SetItem("accessToken", accessToken);
                     localstorage.SetItem("refreshToken", refreshToken);
-                    
+                    //this were the read tokens get set to the local store
 
 
                     //then we added the access token of the authorization header of the httpclient
@@ -107,6 +107,16 @@ namespace BlazorApp.Services
             catch { }
 
             return new Formresult { Succeeded = false, Errors = ["connection Error"] };
+        }
+        public void Logout()
+        {
+            //now when logging out we going to remove the accesstokens that keep us logged in using our local storagewe
+            localstorage.RemoveItem("accessToken");
+            localstorage.RemoveItem("refreshToken");
+            httpClient.DefaultRequestHeaders.Authorization = null;//set the header of the authorization to null
+            NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());//then you call this statement to update the authintication of the user
+        
+        
         }
     }
     public class Formresult

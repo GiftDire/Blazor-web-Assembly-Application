@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Components.Authorization;
+﻿using Blazored.LocalStorage;
+using Microsoft.AspNetCore.Components.Authorization;
+using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Net.WebSockets;
 using System.Reflection.Metadata.Ecma335;
@@ -12,9 +14,19 @@ namespace BlazorApp.Services
     public class CustomAuthStateProvider : AuthenticationStateProvider
     {
         private readonly HttpClient httpClient;
+        private ISyncLocalStorageService localstorage;
 
-        public CustomAuthStateProvider(HttpClient httpClient) {
+        public CustomAuthStateProvider(HttpClient httpClient, ISyncLocalStorageService localstorage) {
             this.httpClient = httpClient;
+            this.localstorage = localstorage;
+
+            //reading the acesstoken in the constructor
+
+            var accessToken = localstorage.GetItem<string>("accessToken");
+            if (accessToken != null)
+            {
+             this.httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer",accessToken);
+            }
         }
         public override async Task<AuthenticationState> GetAuthenticationStateAsync()
         {
@@ -71,6 +83,11 @@ namespace BlazorApp.Services
                     var jsonResponse = JsonNode.Parse(strResponse);///then convert the response in a json format
                     var accessToken = jsonResponse?["accessToken"]?.ToString();//then read the access token as well the refresh token down belowe
                     var refreshToken = jsonResponse?["refreshToken"]?.ToString();
+
+                    localstorage.SetItem("accessToken", accessToken);
+                    localstorage.SetItem("refreshToken", refreshToken);
+                    
+
 
                     //then we added the access token of the authorization header of the httpclient
                     httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", accessToken);//bearer is added with capital b and the access token

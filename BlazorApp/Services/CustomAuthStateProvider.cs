@@ -52,6 +52,8 @@ namespace BlazorApp.Services
 
             }
             catch (Exception ex) {
+               
+                
             
             }
 

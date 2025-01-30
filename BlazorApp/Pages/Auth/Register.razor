@@ -1,5 +1,95 @@
-﻿<h3>Register</h3>
+﻿@page "/Register"
+
+<div class="container-fluid">
+    <div class="row">
+        <div class=" mx-auto rounded border p-4 " style="width : 400px ; margin: 60px;">
+            <h3 class="text-center mb-3">Register</h3>
+            <hr>
+
+            @if(errors.Length > 0)
+            {
+                <div class=" alert alert-danger " role="alert">
+                    <ul>
+                        @foreach(var error in errors)
+                        {
+
+
+                            <li>@error</li>
+                        }
+                    </ul>
+
+                </div>
+            }
+            <div class="mb-3">
+                <label class="form-label">Email </label>
+                <input class="form-control" @bind="email" />
+
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Password</label>
+                <input type="password" class="form-control" @bind="password" />
+
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Confirm Password</label>
+                <input type="password" class="form-control" @bind="confirmPassoword" />
+
+            </div>
+            <div class="row">
+
+                <div class="col d-grid">
+                    <button class="btn btn-primary" @onclick="RegisterAsyn">Register</button>
+
+                </div>
+                <div class="col d-grid">
+                    <a class="btn btn-outline-primary" href="/" role="button">
+                        Cancel
+                    </a>
+
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
+
+@inject AuthenticationStateProvider provider
+@inject NavigationManager navManager
 
 @code {
+    public string email = "";
+    public string password = "";
+    public string confirmPassoword = "";
+    public string[] errors = [];
 
+
+    private async Task RegisterAsyn()
+    {
+        if (password != confirmPassoword)
+        {
+            errors = ["Passord and confirm password do not match!"];
+            return;
+
+        }
+
+        var AuthStateProvider = (CustomAuthStateProvider)provider;
+        var registerDto = new RegisterDto
+            {
+
+                Email = email,
+                Password = password
+            };
+
+        var resp = await AuthStateProvider.RegisterAsyn(registerDto);
+        {
+            if(resp.Succeeded){
+                navManager.NavigateTo("/");
+            }else{
+                errors = resp.Errors;
+            }
+        }
+    }
 }

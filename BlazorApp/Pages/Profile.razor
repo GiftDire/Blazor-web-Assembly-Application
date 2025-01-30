@@ -1,0 +1,61 @@
+﻿@page "/Profile"
+
+
+@attribute [Authorize]
+
+@if (userProfile == null){
+    <p><em>@message</em></p>
+}else{
+    <h3 class="mb-3">Profile</h3>
+
+    <div class=" mx-auto rounded border p-4 "style="width : 400px ; margin: 60px;">
+
+        <div class="mb-3">
+            <label class="form-label">Name </label>
+            <div  class="row-cols-3">
+            <input class="form-control" @bind="userProfile.Name" />
+            </div>
+
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Email </label>
+            <div class="mb-3">
+            <input class="form-control" @bind="userProfile.Email" />
+            </div>
+
+        </div>
+        <div class="mb-3">
+            <label class="form-label">PhoneNumber </label>
+            <div class="mb-3">
+            <input class="form-control" @bind="userProfile.PhoneNumber" />
+
+
+        </div>
+        </div>
+  
+    </div>
+}
+
+@inject HttpClient http
+@code {
+    public UserProfile? userProfile = null;
+
+    public string message = "";
+
+    protected override async Task onInitializedAsync()
+
+    {
+        try
+        {
+            message = "Loading.....";
+
+            userProfile = await http.GetFromJsonAsync<UserProfile>("api/Account/Profile");
+
+        }
+        catch{
+            message = "cannot read user profile !";
+        }
+
+    }
+
+}

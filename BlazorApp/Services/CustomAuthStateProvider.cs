@@ -1,4 +1,5 @@
-﻿using Blazored.LocalStorage;
+﻿using BlazorApp.Models;
+using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.Authorization;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
@@ -117,6 +118,48 @@ namespace BlazorApp.Services
             NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());//then you call this statement to update the authintication of the user
         
         
+        }
+        // method that is going to allow us to register users.
+        public async Task<Formresult> RegisterAsyn(RegisterDto registerDto)//object initiated
+            //returns an object of formresult
+        {
+            try
+            {
+                var response = await httpClient.PostAsJsonAsync("register",registerDto);//sending the data of registerDto using httpclient post
+                if (response.IsSuccessStatusCode)//if we get the success reponse 
+                {
+                    //we authenticate the new created user
+                    var loginResponse = await LoginAsync(registerDto.Email,registerDto.Password);
+                    return loginResponse;
+                }
+
+                //register errors
+
+                var strresponse = await response.Content.ReadAsStringAsync();// reads the http reponse as string.
+                Console.WriteLine(strresponse);// print it to the console for debugging
+                var jsonResponse = JsonNode.Parse(strresponse);//converts the string into jsonNode object
+                var errorsObject = jsonResponse!["errors"]!.AsObject();//asObject converts "errors" into a JsonObject
+                //errorsObject assumed to a dictionary like structure
+                var errorList = new List<string>();//initialize a list to store errors
+                foreach (var error in errorsObject)
+                {
+                    errorList.Add(error.Value![0]!.ToString());
+                
+                }
+                var formResult = new Formresult
+                {
+                    Succeeded = false,
+                    Errors = errorList.ToArray()
+
+
+                }; 
+
+            }
+            catch { }
+            
+                return new Formresult { Succeeded = false, Errors = ["connection error"] };
+              
+            
         }
     }
     public class Formresult

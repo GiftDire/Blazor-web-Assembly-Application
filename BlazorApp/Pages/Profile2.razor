@@ -1,7 +1,7 @@
-﻿@page "/Profile"
+﻿@page "/Profile2"
 
 
-@attribute [Authorize]
+
 
 @if (userProfile == null){
     <p><em>@message</em></p>
@@ -42,8 +42,7 @@
 
     public string message = "";
 
-    protected override async Task OnInitializedAsync()//method ovveriden in oninitializedsync
-                                                      //OnInitializedAsync is a built in lifecycle method
+    protected override async Task OnInitializedAsync()
 
     {
         try

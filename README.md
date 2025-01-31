@@ -1,0 +1,1 @@
+Built a secure Blazor web assembly applicaiton using .NET 9,Identity API, ASP.NET web api and sql server Databsae. Added user registeration, authentication and authorization using identity API, Access Tokens, Entity Framework and SQL Serever Databsae.
